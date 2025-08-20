@@ -1,0 +1,26 @@
+uuid: f6238c39-3326-4ebb-aca8-308237d537e4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - filter.format.plain_text
+    - node.type.speaker
+  module:
+    - text
+id: node.speaker.body
+field_name: body
+entity_type: node
+bundle: speaker
+label: Bio
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+  allowed_formats:
+    - plain_text
+field_type: text_with_summary

@@ -1,0 +1,20 @@
+uuid: ae29ccd1-319f-4d54-9998-e8b260f697a1
+langcode: en
+status: true
+dependencies:
+  module:
+    - event_management
+  theme:
+    - bootstrap5
+id: bootstrap5_upcomingeventsblock
+theme: bootstrap5
+region: sidebar_second
+weight: 0
+provider: null
+plugin: upcoming_events_block
+settings:
+  id: upcoming_events_block
+  label: 'Upcoming Events '
+  label_display: visible
+  provider: event_management
+visibility: {  }

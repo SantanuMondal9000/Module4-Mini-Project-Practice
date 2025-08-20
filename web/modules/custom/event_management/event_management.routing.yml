@@ -1,0 +1,8 @@
+site_content_api.all_content:
+  path: '/api/all-content'
+  defaults:
+    _controller: '\Drupal\event_management\Controller\ContentApiController::getAllContent'
+    _title: 'All Site Content API'
+  requirements:
+    _permission: 'access content'
+    

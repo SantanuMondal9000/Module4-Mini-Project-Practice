@@ -1,0 +1,4 @@
+events_block_styles:
+  css:
+    theme:
+      css/event-styles.css: {}

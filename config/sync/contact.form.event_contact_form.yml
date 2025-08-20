@@ -1,0 +1,12 @@
+uuid: e8660656-b1a4-45a8-9a63-f6092c272449
+langcode: en
+status: true
+dependencies: {  }
+id: event_contact_form
+label: 'Event Contact Form'
+recipients:
+  - rajam9290@gmail.com
+reply: ''
+weight: 0
+message: ''
+redirect: ''

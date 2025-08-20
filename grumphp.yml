@@ -1,0 +1,5 @@
+parameters:
+  tasks:
+    phpcs:
+      standard: [Drupal, DrupalPractice]
+      triggered_by: [php,module,theme,install,profile,inc]

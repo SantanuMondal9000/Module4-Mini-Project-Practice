@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @file
+ * This will controll the event webform.
+ */
+
+use Drupal\webform\WebformSubmissionInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements this hook for alter the node url field of eventregistration webform..
+ */
+function event_management_webform_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $webform = $form_state->getFormObject()->getWebform();
+  if ($webform->id() === 'event_registration') {
+    $submission = $form_state->getFormObject()->getEntity();
+    $source_entity = $submission->getSourceEntity();
+    if ($source_entity && $source_entity->getEntityTypeId() === 'node') {
+      $url = $source_entity->toUrl('canonical', ['absolute' => TRUE])->toString();
+    }
+    if (isset($form['elements']['node_url'])) {
+      $form['elements']['node_url']['#default_value'] = $url;
+      $form['elements']['node_url']['#attributes']['readonly'] = 'readonly';
+      $form['elements']['node_url']['#disabled'] = TRUE;
+    }
+  }
+}
+
+/**
+ * Implements this hook for mail transfer when the form will be insert.
+ */
+function event_management_webform_submission_insert(WebformSubmissionInterface $submission) {
+  $data = $submission->getData();
+
+  // Send Thank You mail to user.
+  if (!empty($data['email'])) {
+    $to = $data['email'];
+    $mailManager = \Drupal::service('plugin.manager.mail');
+    $module = 'event_management';
+    $key = 'thank_you';
+    $params['subject'] = 'Thank you for your submission';
+    $params['message'] = 'We have received your submission. Thank you!';
+    $langcode = \Drupal::currentUser()->getPreferredLangcode();
+    $mailManager->mail($module, $key, $to, $langcode, $params, NULL, TRUE);
+  }
+
+  // Send Admin notification mail.
+  $site_mail = \Drupal::config('system.site')->get('mail');
+  if ($site_mail) {
+    $mailManager = \Drupal::service('plugin.manager.mail');
+    $module = 'event_management';
+    $key = 'admin_notification';
+    $params['subject'] = 'New submission received';
+    $params['message'] = 'A new webform submission has been received.';
+    $langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+    $mailManager->mail($module, $key, $site_mail, $langcode, $params, NULL, TRUE);
+  }
+}
+
+/**
+ * Implements this hook for sent the mail.
+ */
+function event_management_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'thank_you':
+    case 'admin_notification':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['message'];
+      break;
+  }
+}
+
+/**
+ * Implements hook for implement the custom template for showing the live and past events..
+ */
+function event_management_theme($existing, $type, $theme, $path) {
+  return [
+    'event_cards' => [
+      'variables' => [
+        'live_events' => [],
+        'past_events' => [],
+      ],
+      'template' => 'block--upcoming-and-past-events',
+      'path' => $path . '/templates',
+    ],
+  ];
+}

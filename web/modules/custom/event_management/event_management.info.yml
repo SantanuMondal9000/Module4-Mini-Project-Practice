@@ -1,0 +1,5 @@
+name: 'Event Management'
+type: module
+description: 'This module is related to manage the some backends logic of events.'
+package: Custom
+core_version_requirement: ^10 || ^11
