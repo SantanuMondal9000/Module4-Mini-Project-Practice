@@ -1,0 +1,9 @@
+services:
+  event_management.api_auth_middleware:
+    class: Drupal\event_management\Event\ApiAuthMiddleware
+    arguments: ['@config.factory']
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, priority: 100 }
+  event_management.api_auth_check:
+    class: Drupal\event_management\Access\ApiAuthCheck
+    arguments: ['@request_stack', '@config.factory']

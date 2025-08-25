@@ -1,0 +1,236 @@
+/* Header container */
+.region-header {
+  background-color: #000000;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+  align-items: center;
+}
+.navbar-brand a.site-title {
+  color: white;
+}
+.navbar-brand a.site-title:hover {
+  color: white;
+}
+footer {
+  background-color: #e2e2e2;
+  text-align: center;
+}
+/* Card Wrapper Layout */
+.card-wrapper {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+/* Section Headings */
+.card {
+  border: none;
+}
+.cards h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 600;
+}
+.event-card {
+  background: #fff;
+  border-radius: 12px;
+}
+
+/* Event Cards Grid */
+.event-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* Card Container */
+.event-card {
+
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Body */
+.card-body {
+  position: relative;
+  padding: 20px;
+}
+
+/* Badges */
+.live-badge,
+.upcoming-badge,
+.outdated-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+.live-badge {
+  background: #e63946; /* Red for LIVE */
+}
+
+.upcoming-badge {
+  background: #2a9d8f; /* Green for UPCOMING */
+}
+
+.outdated-badge {
+  background: #6c757d; /* Gray for OUTDATED */
+}
+
+/* Event Node Styles */
+.event-node {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+  font-size: 1.5rem;
+}
+
+.event-node:hover {
+  transform: translateY(-5px);
+}
+
+.event-banner img {
+  width: 100%;
+  height: 500px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.event-date,
+.event-location,
+.event-speaker {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-header a {
+  color: #fff;
+}
+
+.card-header a:hover {
+  color: #ffc107;
+  text-decoration: none;
+}
+.registration-form h2 {
+  text-align: center;
+   font-size: 2.5rem;
+   color: #517374;
+   text-decoration: underline;
+}
+.field--name-field-event-registration-form {
+  width: 70%;
+  margin: 20px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.field--name-field-event-registration-form input,
+.field--name-field-event-registration-form select,
+.field--name-field-event-registration-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.field--name-field-event-registration-form input:focus,
+.field--name-field-event-registration-form select:focus,
+.field--name-field-event-registration-form textarea:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.4);
+  outline: none;
+}
+
+.field--name-field-event-registration-form button,
+.field--name-field-event-registration-form input[type="submit"] {
+  background: #4a90e2;
+  color: #fff;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.field--name-field-event-registration-form button:hover,
+.field--name-field-event-registration-form input[type="submit"]:hover {
+  background: #357abd;
+}
+
+.custom-breadcrumb {
+  font-family: Arial, sans-serif;
+  margin: 10px 0;
+  
+}
+
+.custom-breadcrumb ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 2rem;
+}
+
+.custom-breadcrumb li {
+  font-size: 14px;
+  color: #555;
+  position: relative;
+  padding-right: 15px;
+}
+
+.custom-breadcrumb li::after {
+  content: "›";
+  position: absolute;
+  right: 5px;
+  color: #aaa;
+}
+
+.custom-breadcrumb li:last-child::after {
+  content: "";
+}
+
+.custom-breadcrumb a {
+  text-decoration: none;
+  color: #0073aa;
+}
+
+.custom-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.custom-breadcrumb .current {
+  font-weight: bold;
+  color: #000;
+}
+
+
+/* Responsive Fix for Smaller Screens */
+@media (max-width: 768px) {
+  .event-cards {
+    grid-template-columns: 1fr;
+  }
+}

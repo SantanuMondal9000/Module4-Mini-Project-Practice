@@ -1,0 +1,37 @@
+.block-upcoming-events-block {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+.block-upcoming-events-block h2{
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.block__content .item-list ul {
+  list-style: none; /* remove default bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.block__content .item-list li {
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+}
+.block__content .item-list li:hover {
+  background-color: #eef7ff;
+  transform: translateX(5px);
+}
+.block__content .item-list li a {
+  color: #007acc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+

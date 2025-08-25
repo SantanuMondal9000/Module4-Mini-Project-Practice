@@ -1,0 +1,10 @@
+global-styling:
+  css:
+    theme:
+      css/style.css: {}
+  dependencies:
+    - bootstrap5/global-styling
+custom-block-style:
+  css:
+    theme:
+      css/upcoming_block.css: {}
