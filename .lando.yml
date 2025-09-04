@@ -1,0 +1,9 @@
+name: event-project
+recipe: drupal10
+config:
+  webroot: web
+
+services:
+  mailhog:
+    type: mailhog
+    portforward: true

@@ -1,0 +1,9 @@
+#event-search {
+  outline: none;
+  width: 100%;
+  padding: 5px;
+}
+.event-item h3 a{
+  color: #2888b0;
+  text-decoration: none;
+}

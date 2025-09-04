@@ -1,0 +1,82 @@
+uuid: abecab79-6579-4051-811c-c377416ce095
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.event.field_event_banner_image
+    - field.field.node.event.field_event_date
+    - field.field.node.event.field_event_end_date
+    - field.field.node.event.field_event_location
+    - field.field.node.event.field_event_registration_form
+    - field.field.node.event.field_spekaer
+    - node.type.event
+  module:
+    - datetime
+    - image
+    - user
+    - webform
+id: node.event.default
+targetEntityType: node
+bundle: event
+mode: default
+content:
+  field_event_banner_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_event_date:
+    type: datetime_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_event_end_date:
+    type: datetime_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_event_location:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_event_registration_form:
+    type: webform_entity_reference_entity_view
+    label: hidden
+    settings:
+      source_entity: true
+      lazy: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_spekaer:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

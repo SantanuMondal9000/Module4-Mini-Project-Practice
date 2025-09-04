@@ -1,0 +1,37 @@
+uuid: ad1d6499-5332-4094-bdc3-30e3bcfc96cc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.participate.field_event
+    - field.field.node.participate.field_user
+    - node.type.participate
+  module:
+    - user
+id: node.participate.default
+targetEntityType: node
+bundle: participate
+mode: default
+content:
+  field_event:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_user:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

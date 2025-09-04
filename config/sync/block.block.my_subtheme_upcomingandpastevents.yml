@@ -1,0 +1,25 @@
+uuid: 991577fb-480e-457c-804d-161e9dda526e
+langcode: en
+status: true
+dependencies:
+  module:
+    - event_management
+    - system
+  theme:
+    - my_subtheme
+id: my_subtheme_upcomingandpastevents
+theme: my_subtheme
+region: content
+weight: 0
+provider: null
+plugin: upcoming_and_past_events
+settings:
+  id: upcoming_and_past_events
+  label: 'Upcoming and Past Events'
+  label_display: '0'
+  provider: event_management
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /home

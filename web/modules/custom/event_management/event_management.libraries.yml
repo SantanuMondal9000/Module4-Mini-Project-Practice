@@ -1,0 +1,25 @@
+events_block_styles:
+  css:
+    theme:
+      css/event-styles.css: {}
+
+event_search:
+  version: 1.x
+  js:
+    js/event_search.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+  css:
+    theme:
+      css/event-search-styles.css: {}
+      
+participate:
+  version: 1.x
+  js:
+    js/participate.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

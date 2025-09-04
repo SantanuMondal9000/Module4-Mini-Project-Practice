@@ -1,0 +1,34 @@
+uuid: 12116535-bb1b-4add-b2e3-be08f7edf092
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.speaker.body
+    - field.field.node.speaker.field_social_links
+    - field.field.node.speaker.field_speker_image
+    - node.type.speaker
+  module:
+    - text
+    - user
+id: node.speaker.teaser
+targetEntityType: node
+bundle: speaker
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_social_links: true
+  field_speker_image: true

@@ -1,0 +1,20 @@
+uuid: 5623a379-1146-49d8-a886-aa84110b6c31
+langcode: en
+status: true
+dependencies:
+  module:
+    - event_management
+  theme:
+    - my_subtheme
+id: my_subtheme_searcheventblock
+theme: my_subtheme
+region: sidebar_second
+weight: 0
+provider: null
+plugin: event_management_search_event_block
+settings:
+  id: event_management_search_event_block
+  label: 'Search Event Block'
+  label_display: visible
+  provider: event_management
+visibility: {  }

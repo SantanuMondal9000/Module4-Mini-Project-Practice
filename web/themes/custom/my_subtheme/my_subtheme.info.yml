@@ -1,0 +1,17 @@
+name: 'My Subtheme'
+type: theme
+description: 'A custom subtheme of Olivero.'
+package: Custom
+core_version_requirement: ^10 || ^11
+base theme: bootstrap5
+
+libraries:
+  - my_subtheme/global-styling
+  - my_subtheme/custom-block-style
+regions:
+  header: Header
+  content: Content
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer: Footer
+  custom_cards: 'Custom Cards'

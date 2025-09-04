@@ -1,0 +1,22 @@
+uuid: 9dde7181-7cca-4fd7-ad77-8d524dedb7a0
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: spekaer_url_alias
+label: 'Spekaer url alias'
+type: 'canonical_entities:node'
+pattern: '/[node:title]'
+selection_criteria:
+  e7bd0f5f-d9a5-4c78-b2fd-e9600133a7ae:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: e7bd0f5f-d9a5-4c78-b2fd-e9600133a7ae
+    context_mapping:
+      node: node
+    bundles:
+      speaker: speaker
+selection_logic: and
+weight: -5
+relationships: {  }
