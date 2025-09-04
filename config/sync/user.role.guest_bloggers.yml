@@ -1,0 +1,16 @@
+uuid: b57fff3f-1e4c-40c2-a5e7-686d013a950e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.blogs
+  module:
+    - node
+id: guest_bloggers
+label: 'Guest Bloggers'
+weight: 5
+is_admin: null
+permissions:
+  - 'create blogs content'
+  - 'delete any blogs content'
+  - 'edit any blogs content'

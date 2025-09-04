@@ -6,26 +6,26 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- *
+ * This class will collect the api authentication details.
  */
 class ApiAuthConfigForm extends ConfigFormBase {
 
   /**
-   *
+   * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
     return ['event_management.api_auth'];
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function getFormId() {
     return 'event_management_api_auth_form';
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('event_management.api_auth');
@@ -48,7 +48,7 @@ class ApiAuthConfigForm extends ConfigFormBase {
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('event_management.api_auth')

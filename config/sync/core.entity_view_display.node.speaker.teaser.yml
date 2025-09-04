@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.speaker.body
+    - field.field.node.speaker.field_social_links
     - field.field.node.speaker.field_speker_image
     - node.type.speaker
   module:
@@ -29,4 +30,5 @@ content:
     weight: 100
     region: content
 hidden:
+  field_social_links: true
   field_speker_image: true

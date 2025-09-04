@@ -12,7 +12,7 @@ use Drupal\Core\File\FileUrlGeneratorInterface;
 /**
  * This controller will return the all sites content json.
  */
-class ContentApiController extends ControllerBase {
+class ContentApiController extends ControllerBase   {
 
   /**
    * The entity type manager.
@@ -52,7 +52,7 @@ class ContentApiController extends ControllerBase {
   public function getAllContent() {
     $nodes = $this->entityTypeManager
       ->getStorage('node')
-      ->loadMultiple();
+      x`;
 
     $data = [];
 
@@ -62,7 +62,7 @@ class ContentApiController extends ControllerBase {
         'alt' => '',
         'title' => '',
       ];
-
+      
       if ($node->hasField('field_event_banner_image') && !$node->get('field_event_banner_image')->isEmpty()) {
         $image_field = $node->get('field_event_banner_image')->first();
         $file = $image_field->entity;

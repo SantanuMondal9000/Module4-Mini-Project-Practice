@@ -1,0 +1,29 @@
+uuid: ffee5ad6-f911-4046-ad6d-32373d8c2efa
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.participate
+  module:
+    - system
+    - views
+  theme:
+    - my_subtheme
+id: my_subtheme_views_block__participate_block_1
+theme: my_subtheme
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:participate-block_1'
+settings:
+  id: 'views_block:participate-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /participate

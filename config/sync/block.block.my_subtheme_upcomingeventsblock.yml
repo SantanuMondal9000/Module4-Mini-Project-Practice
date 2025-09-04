@@ -1,0 +1,20 @@
+uuid: 439f1b68-ef33-4183-b2cf-5618c0f159e3
+langcode: en
+status: true
+dependencies:
+  module:
+    - event_management
+  theme:
+    - my_subtheme
+id: my_subtheme_upcomingeventsblock
+theme: my_subtheme
+region: sidebar_second
+weight: 0
+provider: null
+plugin: upcoming_events_block
+settings:
+  id: upcoming_events_block
+  label: 'Upcoming Events '
+  label_display: visible
+  provider: event_management
+visibility: {  }

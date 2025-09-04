@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.event.field_event_banner_image
     - field.field.node.event.field_event_date
+    - field.field.node.event.field_event_end_date
     - field.field.node.event.field_event_location
     - field.field.node.event.field_event_registration_form
     - field.field.node.event.field_spekaer
@@ -21,7 +22,7 @@ mode: default
 content:
   field_event_banner_image:
     type: image
-    label: above
+    label: hidden
     settings:
       image_link: ''
       image_style: ''
@@ -32,16 +33,25 @@ content:
     region: content
   field_event_date:
     type: datetime_default
-    label: above
+    label: hidden
     settings:
       timezone_override: ''
       format_type: medium
     third_party_settings: {  }
     weight: 2
     region: content
+  field_event_end_date:
+    type: datetime_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 6
+    region: content
   field_event_location:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -49,7 +59,7 @@ content:
     region: content
   field_event_registration_form:
     type: webform_entity_reference_entity_view
-    label: above
+    label: hidden
     settings:
       source_entity: true
       lazy: false
@@ -58,7 +68,7 @@ content:
     region: content
   field_spekaer:
     type: entity_reference_label
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }

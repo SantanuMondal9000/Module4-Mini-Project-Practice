@@ -16,13 +16,14 @@ elements: |-
   name:
     '#type': webform_name
     '#title': Name
+    '#required': true
     '#title__access': false
     '#first__placeholder': 'First Name'
+    '#first__required': true
     '#middle__access': false
     '#last__placeholder': 'Last Name'
     '#suffix__access': false
     '#degree__access': false
-    '#required': true
   email:
     '#type': email
     '#title': Email
@@ -31,7 +32,10 @@ elements: |-
   phone_number:
     '#type': tel
     '#title': 'Phone Number'
+    '#autocomplete': 'off'
     '#required': true
+    '#international': true
+    '#international_initial_country': IN
   node_url:
     '#type': url
     '#title': 'Node URl'
@@ -40,6 +44,10 @@ elements: |-
     '#title': Country
     '#options': country_names
     '#required': true
+  actions:
+    '#type': webform_actions
+    '#title': 'Submit button(s)'
+    '#submit__label': 'Register Event'
 css: ''
 javascript: ''
 settings:

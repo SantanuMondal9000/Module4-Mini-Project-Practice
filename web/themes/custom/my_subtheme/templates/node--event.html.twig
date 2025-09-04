@@ -85,14 +85,24 @@
         {{ content.field_event_banner_image }}
       </div>
     {% endif %}
+    {% if node.field_event_date.0.value and node.field_event_end_date.0.value %}
+      {% set start_timestamp = node.field_event_date.0.value|date('U') %}
+      {% set end_timestamp = node.field_event_end_date.0.value|date('U') %}
 
-    {% if content.field_event_date %}
-      <p class="event-date"><strong>Start Date:</strong> {{ content.field_event_date }}</p>
-    {% endif %}
-    {% if content.field_event_end_date %}
-      <p class="event-date"><strong>End Date:</strong> {{ content.field_event_end_date }}</p>
-    {% endif %}
+      {% set duration_seconds = end_timestamp - start_timestamp %}
+      {% set duration_days = (duration_seconds / 86400)|round(2) %}
+      {% set duration_hours = (duration_seconds / 3600)|round(2) %}
+      {% set duration_minutes = (duration_seconds / 60)|round(0) %}
 
+      <p class="event-time-title"><strong>The Event Time</strong></p>
+      <p class="event-time">
+        <strong>From</strong> {{ node.field_event_date.0.value|date('d M Y h:i A') }}
+        <strong>To</strong> {{ node.field_event_end_date.0.value|date('d M Y h:i A') }}
+      </p>
+      <p class="event-duration">
+        <strong>Duration: </strong>{{ duration_days }} days ({{ duration_hours }} hours, {{ duration_minutes }} minutes)
+      </p>
+    {% endif %}
     {% if content.field_event_location %}
       <p class="event-location"><strong>Location:</strong> {{ content.field_event_location }}</p>
     {% endif %}

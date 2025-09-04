@@ -5,8 +5,13 @@
  * This will controll the event webform.
  */
 
+use Drupal\views\ViewExecutable;
 use Drupal\webform\WebformSubmissionInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\Core\Database\Database;
 
 /**
  * Implements this hook for alter the node url field of eventregistration webform..
@@ -68,6 +73,11 @@ function event_management_mail($key, &$message, $params) {
       $message['subject'] = $params['subject'];
       $message['body'][] = $params['message'];
       break;
+
+    case 'event_reminder':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['message'];
+      break;
   }
 }
 
@@ -84,5 +94,196 @@ function event_management_theme($existing, $type, $theme, $path) {
       'template' => 'block--upcoming-and-past-events',
       'path' => $path . '/templates',
     ],
+
+    'event_search_results' => [
+      'variables' => [
+        'events' => [],
+        'search_term' => '',
+      ],
+      'template' => 'block--event_management_search_event_block',
+      'path' => $path . '/templates',
+    ],
   ];
 }
+
+/**
+ * This will fetch the events and send the email through queue.
+ */
+function event_management_cron() {
+  $queue = \Drupal::queue('event_reminder_queue');
+
+  // Get tomorrow's date.
+  $tomorrow = new DrupalDateTime('tomorrow', new \DateTimeZone(date_default_timezone_get()));
+  $start = (clone $tomorrow)->setTime(0, 0, 0);
+  $end = (clone $tomorrow)->setTime(23, 59, 59);
+
+  // Convert to storage (UTC).
+  $start->setTimezone(new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE));
+  $end->setTimezone(new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE));
+
+  $start_str = $start->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+  $end_str = $end->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+  \Drupal::logger('event_management')->notice('@start  and @events', ['@start' => $start_str, '@events' => $end_str]);
+
+  $nids = \Drupal::entityQuery('node')
+    ->accessCheck(TRUE)
+    ->condition('type', 'event')
+    ->condition('field_event_date', $start_str, '>=')
+    ->condition('field_event_date', $end_str, '<=')
+    ->execute();
+
+  if (!empty($nids)) {
+    $events = Node::loadMultiple($nids);
+    \Drupal::logger('event_management')->notice('Cron called for events: @events', ['@events' => implode(', ', array_keys($events))]);
+    $connection = Database::getConnection();
+    foreach ($events as $event) {
+      $query = $connection->select('node_field_data', 'n');
+      $query->fields('n', ['nid', 'title']);
+      $query->addField('d', 'field_event_date_value', 'event_date');
+      $query->join('node__field_event_date', 'd', 'n.nid = d.entity_id');
+      $query->condition('n.type', 'event');
+      $query->condition('n.nid', $event->id());
+      $node_data = $query->execute()->fetchAll();
+      var_dump($node_data);
+      $query2 = $connection->select('webform_submission_data', 'wsd');
+      $query2->fields('wsd', ['name', 'value', 'sid']);
+      $query2->addField('ws', 'entity_id');
+      $query2->join('webform_submission', 'ws', 'ws.sid = wsd.sid');
+      $query2->condition('ws.entity_id', $event->id());
+      $query2->condition('wsd.name', ['email'], 'IN');
+      $results = $query2->execute()->fetchAll();
+
+      var_dump("event id " . $event->id());
+      foreach ($results as $row) {
+        // Debugging output.
+        var_dump($row);
+
+        if ($row->name === 'email') {
+          $queue->createItem([
+            'email' => $row->value,
+            'event_title' => $event->label(),
+          ]);
+        }
+      }
+    }
+  }
+  else {
+
+    \Drupal::logger('event_management')->notice("cron called");
+  }
+
+  $date_limit = strtotime('-1 year');
+
+  // Get all blogs older than 1 year by Guest Blogger.
+  $nids = \Drupal::entityQuery('node')
+    ->condition('type', 'blogs')
+    ->condition('uid.entity.roles', 'guest_bloggers')
+    ->condition('field_publish_date', $date_limit, '<')
+    ->accessCheck(TRUE)
+    ->execute();
+  \Drupal::logger('delete_old_blogs')->notice('Deleted @count old blogs.');
+  if (!empty($nids)) {
+    $nodes = Node::loadMultiple($nids);
+    foreach ($nodes as $node) {
+      $node->delete();
+    }
+    \Drupal::logger('delete_old_blogs')->notice('Deleted @count old blogs.', ['@count' => count($nids)]);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for views_view_fields.
+ */
+function event_management_preprocess_views_view_fields(&$variables) {
+  $view = $variables['view'];
+
+  // Check only for the specific view & display you want.
+  if ($view->id() === 'participate' && $view->current_display === 'block_1') {
+    $account = \Drupal::currentUser();
+    if ($account->isAuthenticated()) {
+      $uid = $account->id();
+
+      // Get the event NID from the current row.
+      $nid = $variables['row']->_entity->id();
+
+      // Check participation for this user.
+      $existing = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('type', 'participate')
+        ->condition('field_user', $uid)
+        ->range(0, 1)
+        ->execute();
+
+      if (!empty($existing)) {
+        // Load the existing participation node.
+        $participation_nid = reset($existing);
+        /** @var \Drupal\node\Entity\Node $participation */
+        $participation = Node::load($participation_nid);
+
+        // Get current field_event values.
+        $current_events = $participation->get('field_event')->getValue();
+        $event_ids = array_column($current_events, 'target_id');
+
+        // Check if the event is already in the list.
+      }
+      if (in_array($nid, $event_ids)) {
+        $variables['participated'] = 1;
+      }
+      else {
+        $variables['participated'] = 0;
+      }
+    }
+    else {
+      // Anonymous users can't participate, so set to 0 by default.
+      $variables['participated'] = 0;
+    }
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function event_management_views_pre_render(ViewExecutable $view) {
+  if ($view->id() === 'participate' && $view->current_display === 'block_1') {
+    $account = \Drupal::currentUser();
+
+    foreach ($view->result as &$row) {
+      // Get the node ID directly from the row entity.
+      $nid = $row->_entity->id();
+
+      $row->custom_field = 'My custom value';
+      // Default.
+      $row->participated = 0;
+
+      if ($account->isAuthenticated()) {
+        $uid = $account->id();
+
+        // Find participation node for this user.
+        $existing = \Drupal::entityTypeManager()
+          ->getStorage('node')
+          ->getQuery()
+          ->accessCheck(TRUE)
+          ->condition('type', 'participate')
+          ->condition('field_user', $uid)
+          ->range(0, 1)
+          ->execute();
+
+        if (!empty($existing)) {
+          $participation_nid = reset($existing);
+          $participation = Node::load($participation_nid);
+
+          // Get all event IDs from participation node.
+          $current_events = $participation->get('field_event')->getValue();
+          $event_ids = array_column($current_events, 'target_id');
+
+          if (in_array($nid, $event_ids)) {
+            $row->participated = 1;
+          }
+        }
+      }
+    }
+  }
+}
+

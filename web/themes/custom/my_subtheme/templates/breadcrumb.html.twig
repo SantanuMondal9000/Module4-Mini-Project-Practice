@@ -1,12 +1,13 @@
 {% if breadcrumb %}
   <nav class="custom-breadcrumb" aria-label="Breadcrumb">
+  {# {{ dump(breadcrumb) }} #}
     <ul>
       {% for item in breadcrumb %}
         <li>
           {% if item.url %}
             <a href="{{ item.url }}">{{ item.text }}</a>
           {% else %}
-            <span class="current">{{ item.text }}</span>
+            {# <span class="current">{{ item.text }}</span> #}
           {% endif %}
         </li>
       {% endfor %}

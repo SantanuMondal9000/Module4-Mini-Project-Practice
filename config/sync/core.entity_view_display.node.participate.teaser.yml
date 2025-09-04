@@ -1,0 +1,24 @@
+uuid: cc998e7d-8b5d-4ee8-99b0-07618d7b3c3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.participate.field_event
+    - field.field.node.participate.field_user
+    - node.type.participate
+  module:
+    - user
+id: node.participate.teaser
+targetEntityType: node
+bundle: participate
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_event: true
+  field_user: true

@@ -4,9 +4,11 @@ status: true
 dependencies:
   config:
     - field.field.node.speaker.body
+    - field.field.node.speaker.field_social_links
     - field.field.node.speaker.field_speker_image
     - node.type.speaker
   module:
+    - event_management
     - image
     - text
     - user
@@ -21,6 +23,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_social_links:
+    type: social_links_formatter
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
     region: content
   field_speker_image:
     type: image

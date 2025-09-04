@@ -6,3 +6,48 @@ site_content_api.all_content:
   requirements:
     _permission: 'access content'
     
+event_management.publish_articles:
+  path: '/batch-example/publish-articles'
+  defaults:
+    _controller: '\Drupal\event_management\Controller\BatchExampleController::startBatch'
+    _title: 'Publish Articles Batch'
+  requirements:
+    _permission: 'access content'
+
+event_management.search_ajax:
+  path: '/event-search-ajax'
+  defaults:
+    _controller: '\Drupal\event_management\Controller\EventSearchController::searchAjax'
+    _title: 'Event Search Ajax'
+  requirements:
+    _permission: 'access content'
+
+event_participation.participate:
+  path: '/participate/ajax'
+  defaults:
+    _controller: '\Drupal\event_management\Controller\ParticipateController::participate'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]
+  options:
+    _format: 'json'
+    _csrf_token: TRUE
+
+event_participation.Removeparticipate:
+  path: '/participate-remove/ajax'
+  defaults:
+    _controller: '\Drupal\event_management\Controller\ParticipateController::participateRemove'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]
+  options:
+    _format: 'json'
+    _csrf_token: TRUE
+
+event_management.participate_check:
+  path: '/participate/check/{nid}'
+  defaults:
+    _controller: '\Drupal\event_management\Controller\ParticipateController::checkParticipation'
+  requirements:
+    _permission: 'access content'
+    nid: '\d+'

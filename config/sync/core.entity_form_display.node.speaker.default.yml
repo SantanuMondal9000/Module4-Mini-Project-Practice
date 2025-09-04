@@ -4,10 +4,12 @@ status: true
 dependencies:
   config:
     - field.field.node.speaker.body
+    - field.field.node.speaker.field_social_links
     - field.field.node.speaker.field_speker_image
     - image.style.thumbnail
     - node.type.speaker
   module:
+    - event_management
     - image
     - path
     - text
@@ -29,6 +31,12 @@ content:
   created:
     type: datetime_timestamp
     weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_social_links:
+    type: social_links_widget
+    weight: 123
     region: content
     settings: {  }
     third_party_settings: {  }

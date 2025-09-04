@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * This will send the theme data.
+ */
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Implementation().
+ */
+function my_subtheme_preprocess_views_view_fields(array &$variables) {
+  $view = $variables['view'];
+
+  if ($view->id() === 'participate' && $view->current_display === 'block_1') {
+    $account = \Drupal::currentUser();
+    $participated = 0;
+
+    if ($account->isAuthenticated()) {
+      $uid = $account->id();
+      $nid = $variables['row']->_entity->id();
+
+      $existing = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('type', 'participate')
+        ->condition('field_user', $uid)
+        ->range(0, 1)
+        ->execute();
+
+      if (!empty($existing)) {
+        $participation_nid = reset($existing);
+        $participation = Node::load($participation_nid);
+
+        $current_events = $participation->get('field_event')->getValue();
+        $event_ids = array_column($current_events, 'target_id');
+
+        if (in_array($nid, $event_ids)) {
+          $participated = 1;
+        }
+      }
+    }
+
+    // Attach the variable so it's accessible in Twig.
+    $variables['fields']['participated']['content'] = $participated;
+  }
+}

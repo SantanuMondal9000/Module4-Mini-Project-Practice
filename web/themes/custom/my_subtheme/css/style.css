@@ -228,6 +228,61 @@ footer {
 }
 
 
+.event-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  transition: background 0.3s ease;
+}
+
+.event-items:hover {
+  background: #f1f1f1;
+}
+
+.event-items a {
+  color: #0073e6;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.event-items a:hover {
+  text-decoration: underline;
+}
+
+.participate-btn ,.participate-remove-btn {
+  padding: 6px 12px;
+  background-color: #28a745; /* Green */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  /* cursor: pointer; */
+  font-size: 14px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.participate-remove-btn {
+  background-color: red;
+  /* cursor: not-allowed; */
+}
+.participate-remove-btn:disabled {
+  background-color: gray;
+}
+.participate-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.participate-btn[data-participated="1"] {
+  background-color: #6c757d;
+}
+
+
+
 /* Responsive Fix for Smaller Screens */
 @media (max-width: 768px) {
   .event-cards {
